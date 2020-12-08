@@ -78,6 +78,12 @@ module.exports = function(env) {
               compact: isProdEnv,
             }
           }
+        },
+        {
+          test: /\.css$/,
+          exclude: /node_module/,
+          include: paths.appSrc,
+          use: ['style-loader', 'css-loader'],
         }
       ]
     },
