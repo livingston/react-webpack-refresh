@@ -15,7 +15,7 @@ const PROD_ENV = 'production';
 
 const VALID_ENVS = [DEV_ENV, PROD_ENV];
 
-function getHTMLWebpackConfig (isProd) {
+function getHTMLWebpackConfig(isProd) {
   if (isProd) {
     return {
       minify: {
@@ -35,7 +35,7 @@ function getHTMLWebpackConfig (isProd) {
   return {};
 }
 
-module.exports = function(env) {
+module.exports = function (env) {
   if (typeof env == 'string' && !VALID_ENVS.includes(env)) {
     throw new Error(
       'Valid values are "development", and "production". ' +
@@ -48,7 +48,10 @@ module.exports = function(env) {
   const isDevEnv = env?.development ?? env === DEV_ENV;
   const mode = isProdEnv ? PROD_ENV : isDevEnv && DEV_ENV;
 
-  console.log(chalk.cyan.bold(`Webpack is running in ${chalk.bgCyan.white(` ${mode} `)} mode`));
+  console.log(
+    chalk.cyan.bold('Webpack is running in %s mode'),
+    chalk.bgCyan.white(` ${mode} `),
+  );
 
   const webpackConfig = {
     target: 'browserslist',
@@ -56,7 +59,9 @@ module.exports = function(env) {
     bail: isProdEnv,
     devtool: isProdEnv ? 'source-map' : 'cheap-module-source-map',
 
-    entry: [path.resolve(paths.appSrc, './index.js')],
+    entry: {
+      app: [path.resolve(paths.appSrc, './index.js')],
+    },
     output: {
       filename: '[name].[contenthash].js',
       path: paths.appDist,
@@ -118,9 +123,11 @@ module.exports = function(env) {
       // level: 'none',
     };
 
-    webpackConfig.entry.unshift(
-      'webpack-hot-middleware/client?overlay=false&noInfo=true&reload=true',
-    );
+    Object.keys(webpackConfig.entry).forEach(entryName => {
+      webpackConfig.entry[entryName].unshift(
+        'webpack-hot-middleware/client?overlay=false&noInfo=true&reload=true',
+      );
+    });
 
     webpackConfig.plugins.push(
       new webpack.HotModuleReplacementPlugin(),
