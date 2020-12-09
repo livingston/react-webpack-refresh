@@ -7,6 +7,7 @@ const HTMLWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const SizePlugin = require('size-plugin');
 
 const paths = require('./paths');
 
@@ -136,6 +137,12 @@ module.exports = function (env) {
           sockIntegration: 'whm',
         },
       }),
+    );
+  }
+
+  if (isProdEnv) {
+    webpackConfig.plugins.push(
+      new SizePlugin({ writeFile: false, publish: false }),
     );
   }
 
