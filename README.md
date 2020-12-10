@@ -2,7 +2,7 @@
 
 This is a repo with the following setup,
 
-- React v17.0.1 (with automatic runtime enabled)
+- React v17.0.1 (with new JSX runtime)
 - React Router v6-beta
 - Webpack 5
 - Babel 7.12.*
