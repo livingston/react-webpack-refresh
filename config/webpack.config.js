@@ -50,8 +50,9 @@ module.exports = function (env) {
   const mode = isProdEnv ? PROD_ENV : isDevEnv && DEV_ENV;
 
   console.log(
-    chalk.cyan.bold('Webpack is running in %s mode'),
-    chalk.bgCyan.white(` ${mode} `),
+    chalk.cyan('Webpack will run in'),
+    chalk.bgCyan.bold.white(` ${mode} `),
+    chalk.cyan('mode'),
   );
 
   const webpackConfig = {

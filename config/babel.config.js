@@ -11,7 +11,7 @@ const PROD_ENV = 'production';
 const VALID_ENVS = [DEV_ENV, TEST_ENV, PROD_ENV];
 
 module.exports = function (api) {
-  console.log(chalk.keyword('orange').bold(`babel is running in ${chalk.bgKeyword('orange').white(` ${api.env()} `)} mode \n`));
+  console.log(chalk.keyword('orange')(`babel will run in ${chalk.bgKeyword('orange').white.bold(` ${api.env()} `)} mode \n`));
 
   if (!api.env(VALID_ENVS)) {
     throw new Error(
